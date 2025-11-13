@@ -1,6 +1,4 @@
 
-
-
 "use client";
 
 import { useState, useRef } from "react";
@@ -241,6 +239,7 @@ function DefaultFormFlow() {
             const config = fieldConfig[fieldName];
             if (!config) return null;
             const { icon: Icon, label } = config;
+            const isAddress = fieldName === 'address';
             return (
                 <FormField
                     key={fieldName}
@@ -254,11 +253,19 @@ function DefaultFormFlow() {
                             </FormLabel>
                             <FormControl>
                                 <div className="relative flex items-center">
-                                    <Input
-                                        placeholder={`Enter ${label.toLowerCase()}`}
-                                        {...field}
-                                        className="bg-background/80"
-                                    />
+                                    {isAddress ? (
+                                         <Textarea
+                                            placeholder={`Enter ${label.toLowerCase()}`}
+                                            {...field}
+                                            className="bg-background/80"
+                                        />
+                                    ) : (
+                                        <Input
+                                            placeholder={`Enter ${label.toLowerCase()}`}
+                                            {...field}
+                                            className="bg-background/80"
+                                        />
+                                    )}
                                     <VoiceInputButton
                                         onTranscript={(transcript) => form.setValue(fieldName, transcript, { shouldValidate: true })}
                                     />
@@ -462,7 +469,14 @@ function CustomFormFlow() {
     const photoInputRef = useRef<HTMLInputElement>(null);
     
     // Using a dynamic schema with react-hook-form
-    const form = useForm();
+    const defaultValues = extractedSchema ? extractedSchema.reduce((acc, field) => {
+        acc[field] = '';
+        return acc;
+    }, {} as Record<string, string>) : {};
+
+    const form = useForm({
+        defaultValues
+    });
     
     const handleCustomFormFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files?.[0];
@@ -505,6 +519,12 @@ function CustomFormFlow() {
                 });
             } else {
                 setExtractedSchema(result.fields);
+                const defaultVals = result.fields.reduce((acc, field) => {
+                    acc[field] = '';
+                    return acc;
+                }, {} as Record<string, string>);
+
+                form.reset(defaultVals);
                 result.fields.forEach(field => {
                     form.register(field);
                 });
@@ -705,3 +725,5 @@ export function FormAssistant() {
 
   return null;
 }
+
+    
