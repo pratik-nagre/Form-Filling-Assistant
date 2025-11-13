@@ -16,10 +16,12 @@ export function VoiceInputButton({
 }: VoiceInputButtonProps) {
   const [isListening, setIsListening] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   useEffect(() => {
-    // This effect should only run once on mount on the client.
+    setIsMounted(true);
+
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (SpeechRecognition) {
       setIsSupported(true);
@@ -78,6 +80,22 @@ export function VoiceInputButton({
       setIsListening(true);
     }
   };
+
+  if (!isMounted) {
+    // Render a placeholder or nothing on the server and initial client render
+    return (
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          disabled
+          className="text-muted-foreground/50"
+          aria-label="Voice input initializing"
+        >
+          <MicOff className="h-4 w-4" />
+        </Button>
+    );
+  }
 
   if (!isSupported) {
     return (
