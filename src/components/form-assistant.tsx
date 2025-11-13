@@ -150,7 +150,8 @@ export function FormAssistant() {
     const fieldsToInclude = formType === "A" ? formAFields : formBFields;
 
     doc.setFontSize(22);
-    doc.setTextColor(getComputedStyle(document.documentElement).getPropertyValue('--primary').trim());
+    const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+    doc.setTextColor(`hsl(${primaryColor})`);
     doc.text(`Form ${formType} Data`, 20, 20);
     
     doc.setFontSize(12);
@@ -162,8 +163,9 @@ export function FormAssistant() {
         doc.setFont("helvetica", "bold");
         doc.text(`${fieldConfig[key].label}:`, 20, y);
         doc.setFont("helvetica", "normal");
+        const textDimensions = doc.getTextDimensions(data[key] as string, { maxWidth: 120 });
         doc.text(data[key] as string, 70, y, { maxWidth: 120 });
-        y += (doc.getTextDimensions(data[key] as string, { maxWidth: 120 }).h) + 6;
+        y += textDimensions.h + 6;
       }
     });
 
