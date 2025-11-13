@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,6 +19,10 @@ import {
   Fingerprint,
   CreditCard,
   X,
+  Camera,
+  ArrowRight,
+  Check,
+  FileUp,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -39,11 +44,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { extractDataAction } from "@/app/actions";
 import { VoiceInputButton } from "@/components/voice-input-button";
 import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
 
 const formSchema = z.object({
   name: z.string().optional(),
@@ -55,7 +60,15 @@ const formSchema = z.object({
 });
 
 type FormValues = z.infer<typeof formSchema>;
-type FormType = "A" | "B";
+
+const allFields: (keyof FormValues)[] = [
+  "name",
+  "dob",
+  "gender",
+  "address",
+  "aadhaar",
+  "pan",
+];
 
 const fieldConfig: Record<
   keyof FormValues,
@@ -69,15 +82,16 @@ const fieldConfig: Record<
   pan: { label: "PAN Number", icon: CreditCard },
 };
 
-const formAFields: (keyof FormValues)[] = ["name", "dob", "gender", "address"];
-const formBFields: (keyof FormValues)[] = ["name", "aadhaar", "pan"];
-
 export function FormAssistant() {
-  const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [formType, setFormType] = useState<FormType>("A");
+  const [step, setStep] = useState(1);
+  const [docFile, setDocFile] = useState<File | null>(null);
+  const [docPreview, setDocPreview] = useState<string | null>(null);
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [isExtracting, setIsExtracting] = useState(false);
   const { toast } = useToast();
+  const docInputRef = useRef<HTMLInputElement>(null);
+  const photoInputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -91,35 +105,48 @@ export function FormAssistant() {
     },
   });
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDocFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
-      setFile(selectedFile);
+      setDocFile(selectedFile);
       if (selectedFile.type.startsWith("image/")) {
         const reader = new FileReader();
         reader.onloadend = () => {
-          setPreview(reader.result as string);
+          setDocPreview(reader.result as string);
         };
         reader.readAsDataURL(selectedFile);
       } else {
-        setPreview(null);
+        setDocPreview(null); // No preview for non-image files like PDF
       }
     }
   };
 
-  const handleExtractData = async () => {
-    if (!file) return;
+  const handlePhotoFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile && selectedFile.type.startsWith("image/")) {
+      setPhotoFile(selectedFile);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotoPreview(reader.result as string);
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  };
 
-    setIsLoading(true);
+
+  const handleExtractData = async () => {
+    if (!docFile) return;
+
+    setIsExtracting(true);
     form.reset();
 
     const reader = new FileReader();
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(docFile);
     reader.onload = async () => {
       const dataUrl = reader.result as string;
       const result = await extractDataAction(dataUrl);
 
-      setIsLoading(false);
+      setIsExtracting(false);
       if ("error" in result) {
         toast({
           variant: "destructive",
@@ -129,13 +156,18 @@ export function FormAssistant() {
       } else {
         const formattedResult = {
           ...result,
-          dob: result.dob ? result.dob.split('T')[0] : '', // Ensure date is in YYYY-MM-DD
+          dob: result.dob ? result.dob.split('T')[0] : '',
         };
         form.reset(formattedResult);
+        setStep(2);
+        toast({
+          title: "Data Extracted",
+          description: "Please review and complete the form.",
+        });
       }
     };
     reader.onerror = () => {
-      setIsLoading(false);
+      setIsExtracting(false);
       toast({
         variant: "destructive",
         title: "File Read Error",
@@ -147,38 +179,60 @@ export function FormAssistant() {
   const handleDownloadPdf = () => {
     const doc = new jsPDF();
     const data = form.getValues();
-    const fieldsToInclude = formType === "A" ? formAFields : formBFields;
-
+    
     doc.setFontSize(22);
     const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
     doc.setTextColor(`hsl(${primaryColor})`);
-    doc.text(`Form ${formType} Data`, 20, 20);
-    
+    doc.text("Extracted Form Data", 20, 20);
+
     doc.setFontSize(12);
     doc.setTextColor(0,0,0);
-
+    
     let y = 40;
-    fieldsToInclude.forEach((key) => {
+
+    if (photoPreview) {
+      try {
+        doc.addImage(photoPreview, 'JPEG', 140, y, 50, 50);
+        y += 60; // Add space after photo
+      } catch (error) {
+        console.error("Error adding image to PDF:", error);
+        toast({
+          variant: "destructive",
+          title: "PDF Error",
+          description: "Failed to add the photo to the PDF."
+        });
+      }
+    }
+
+
+    allFields.forEach((key) => {
       if (data[key]) {
         doc.setFont("helvetica", "bold");
         doc.text(`${fieldConfig[key].label}:`, 20, y);
         doc.setFont("helvetica", "normal");
-        const textDimensions = doc.getTextDimensions(data[key] as string, { maxWidth: 120 });
-        doc.text(data[key] as string, 70, y, { maxWidth: 120 });
+        const textDimensions = doc.getTextDimensions(data[key] as string, { maxWidth: 110 });
+        doc.text(data[key] as string, 70, y, { maxWidth: 110 });
         y += textDimensions.h + 6;
       }
     });
 
-    doc.save(`form-data-${formType}.pdf`);
+    doc.save("form-data.pdf");
   };
 
-  const clearPreview = () => {
-    setFile(null);
-    setPreview(null);
+  const clearDocPreview = () => {
+    setDocFile(null);
+    setDocPreview(null);
+    if(docInputRef.current) docInputRef.current.value = "";
   }
-
-  const renderFields = (fields: (keyof FormValues)[]) => {
-    return fields.map((fieldName) => {
+  
+  const clearPhotoPreview = () => {
+    setPhotoFile(null);
+    setPhotoPreview(null);
+    if(photoInputRef.current) photoInputRef.current.value = "";
+  }
+  
+  const renderFields = () => {
+    return allFields.map((fieldName) => {
       const { icon: Icon, label } = fieldConfig[fieldName];
       return (
         <FormField
@@ -187,8 +241,8 @@ export function FormAssistant() {
           name={fieldName}
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="flex items-center">
-                <Icon className="h-4 w-4 mr-2 text-primary" />
+              <FormLabel className="flex items-center text-muted-foreground">
+                <Icon className="h-4 w-4 mr-2" />
                 {label}
               </FormLabel>
               <FormControl>
@@ -196,6 +250,7 @@ export function FormAssistant() {
                   <Input
                     placeholder={`Enter ${label.toLowerCase()}`}
                     {...field}
+                    className="bg-background/80"
                   />
                   <VoiceInputButton
                     onTranscript={(transcript) => form.setValue(fieldName, transcript, { shouldValidate: true })}
@@ -210,110 +265,180 @@ export function FormAssistant() {
     });
   }
 
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-      <Card className="lg:col-span-2">
-        <CardHeader>
-          <CardTitle>1. Upload Document</CardTitle>
-          <CardDescription>
-            Upload an image of your document to extract information.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <label
-              htmlFor="file-upload"
-              className={cn(
-                "flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer hover:bg-muted/50 transition-colors",
-                { "border-primary": !preview }
-              )}
-            >
-              {preview ? (
-                <div className="relative w-full h-full">
-                  <Image
-                    src={preview}
-                    alt="Document Preview"
-                    layout="fill"
-                    objectFit="contain"
-                    className="rounded-lg"
-                  />
-                   <Button variant="destructive" size="icon" className="absolute top-2 right-2 h-8 w-8 rounded-full z-10" onClick={(e) => {e.preventDefault(); clearPreview();}}>
-                    <X className="h-4 w-4" />
-                    <span className="sr-only">Clear preview</span>
-                  </Button>
-                </div>
-              ) : file ? (
-                <div className="flex flex-col items-center justify-center pt-5 pb-6 text-center">
-                  <FileText className="w-10 h-10 mb-3 text-primary" />
-                  <p className="mb-2 text-sm font-semibold">{file.name}</p>
-                  <p className="text-xs text-muted-foreground">{ (file.size / 1024).toFixed(2) } KB</p>
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                  <Upload className="w-10 h-10 mb-3 text-primary" />
-                  <p className="mb-2 text-sm text-foreground">
-                    <span className="font-semibold">Click to upload</span> or drag and drop
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    Image files (JPG, PNG, etc.)
-                  </p>
-                </div>
-              )}
-              <Input id="file-upload" type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
-            </label>
+  const renderUploadCard = (
+    title: string,
+    description: string,
+    file: File | null,
+    preview: string | null,
+    handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    clearPreview: () => void,
+    accept: string,
+    Icon: LucideIcon,
+    inputRef: React.RefObject<HTMLInputElement>
+  ) => (
+    <div className="space-y-4">
+      <h3 className="font-semibold text-lg flex items-center"><Icon className="h-5 w-5 mr-2 text-primary"/>{title}</h3>
+      <p className="text-sm text-muted-foreground -mt-2">{description}</p>
+      <label
+        htmlFor={title.toLowerCase().replace(" ", "-")}
+        className={cn(
+          "flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer hover:bg-muted/50 transition-colors",
+          { "border-primary bg-muted/20": !preview && !file }
+        )}
+      >
+        {preview ? (
+          <div className="relative w-full h-full">
+            <Image
+              src={preview}
+              alt="Preview"
+              fill
+              style={{objectFit:"contain"}}
+              className="rounded-lg p-2"
+            />
+             <Button variant="destructive" size="icon" className="absolute top-2 right-2 h-8 w-8 rounded-full z-10" onClick={(e) => {e.preventDefault(); clearPreview();}}>
+              <X className="h-4 w-4" />
+              <span className="sr-only">Clear preview</span>
+            </Button>
           </div>
-        </CardContent>
-        <CardFooter>
-          <Button
-            onClick={handleExtractData}
-            disabled={!file || isLoading}
-            className="w-full"
-          >
-            {isLoading ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : (
-              <Fingerprint className="mr-2 h-4 w-4" />
+        ) : file ? (
+          <div className="flex flex-col items-center justify-center pt-5 pb-6 text-center">
+            <FileText className="w-10 h-10 mb-3 text-primary" />
+            <p className="mb-2 text-sm font-semibold">{file.name}</p>
+            <p className="text-xs text-muted-foreground">{ (file.size / 1024).toFixed(2) } KB</p>
+             <Button variant="destructive" size="icon" className="absolute top-2 right-2 h-8 w-8 rounded-full z-10" onClick={(e) => {e.preventDefault(); clearPreview();}}>
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+            <Upload className="w-10 h-10 mb-3 text-primary" />
+            <p className="mb-2 text-sm text-foreground">
+              <span className="font-semibold">Click to upload</span> or drag and drop
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {accept === "image/*" ? "Image files" : "Image or PDF files"}
+            </p>
+          </div>
+        )}
+        <Input ref={inputRef} id={title.toLowerCase().replace(" ", "-")} type="file" className="hidden" onChange={handleFileChange} accept={accept} />
+      </label>
+    </div>
+  );
+
+  return (
+    <div className="space-y-8">
+      {/* Step 1: Upload Document */}
+      <Card className={cn("transition-all duration-500", step < 1 && "opacity-50")}>
+        <CardHeader>
+          <CardTitle className="flex items-center">
+            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground mr-3 font-bold text-lg">1</div>
+            Upload Source Document
+            {step > 1 && <Check className="ml-auto h-6 w-6 text-green-500" />}
+          </CardTitle>
+          <CardDescription>Upload an ID card, form, or any document to extract information from.</CardDescription>
+        </CardHeader>
+        {step === 1 && (
+        <>
+          <CardContent>
+            {renderUploadCard(
+              "Source Document",
+              "Upload an image or PDF of your document to extract information.",
+              docFile,
+              docPreview,
+              handleDocFileChange,
+              clearDocPreview,
+              "image/*,application/pdf",
+              FileUp,
+              docInputRef
             )}
-            {isLoading ? "Extracting..." : "Extract Data"}
-          </Button>
-        </CardFooter>
+          </CardContent>
+          <CardFooter>
+            <Button
+              onClick={handleExtractData}
+              disabled={!docFile || isExtracting}
+              className="w-full"
+            >
+              {isExtracting ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <ArrowRight className="mr-2 h-4 w-4" />
+              )}
+              {isExtracting ? "Extracting..." : "Extract & Continue"}
+            </Button>
+          </CardFooter>
+        </>
+        )}
+      </Card>
+      
+      {/* Step 2: Fill Form & Upload Photo */}
+      <Card className={cn("transition-all duration-500", step < 2 && "opacity-50 pointer-events-none")}>
+        <CardHeader>
+          <CardTitle className="flex items-center">
+             <div className={cn("flex items-center justify-center w-8 h-8 rounded-full mr-3 font-bold text-lg", step === 2 ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground")}>2</div>
+             Review & Complete
+             {step > 2 && <Check className="ml-auto h-6 w-6 text-green-500" />}
+          </CardTitle>
+          <CardDescription>Review the extracted data, make corrections, and upload a profile photo if needed.</CardDescription>
+        </CardHeader>
+        {step === 2 && (
+          <>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
+                  <div className="md:col-span-3 space-y-6">
+                    <Form {...form}>
+                      <form className="space-y-4">
+                        {renderFields()}
+                      </form>
+                    </Form>
+                  </div>
+                  <div className="md:col-span-2 space-y-4">
+                    {renderUploadCard(
+                        "Profile Photo (Optional)",
+                        "Upload a passport-style photo for the form.",
+                        photoFile,
+                        photoPreview,
+                        handlePhotoFileChange,
+                        clearPhotoPreview,
+                        "image/*",
+                        Camera,
+                        photoInputRef
+                    )}
+                  </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+               <Button onClick={() => setStep(3)} className="w-full">
+                <Check className="mr-2 h-4 w-4" />
+                Confirm & Proceed to Download
+              </Button>
+            </CardFooter>
+          </>
+        )}
       </Card>
 
-      <Card className="lg:col-span-3">
+      {/* Step 3: Download */}
+      <Card className={cn("transition-all duration-500", step < 3 && "opacity-50 pointer-events-none")}>
         <CardHeader>
-          <CardTitle>2. Fill Form</CardTitle>
-          <CardDescription>
-            Select a form, then review and edit the extracted data.
-          </CardDescription>
+          <CardTitle className="flex items-center">
+            <div className={cn("flex items-center justify-center w-8 h-8 rounded-full mr-3 font-bold text-lg", step === 3 ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground")}>3</div>
+            Download
+          </CardTitle>
+          <CardDescription>Your form data is ready. Download it as a PDF.</CardDescription>
         </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form className="space-y-6">
-              <Tabs
-                value={formType}
-                onValueChange={(value) => setFormType(value as FormType)}
-              >
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="A">Sample Form A</TabsTrigger>
-                  <TabsTrigger value="B">Sample Form B</TabsTrigger>
-                </TabsList>
-                <TabsContent value="A" className="mt-6 space-y-6">
-                  {renderFields(formAFields)}
-                </TabsContent>
-                <TabsContent value="B" className="mt-6 space-y-6">
-                  {renderFields(formBFields)}
-                </TabsContent>
-              </Tabs>
-            </form>
-          </Form>
-        </CardContent>
-        <CardFooter>
-          <Button onClick={handleDownloadPdf} className="w-full">
-            <Download className="mr-2 h-4 w-4" />
-            Download as PDF
-          </Button>
-        </CardFooter>
+        {step === 3 && (
+          <CardContent>
+            <div className="flex items-center justify-center p-8 bg-muted/50 rounded-lg">
+                <Button onClick={handleDownloadPdf} size="lg">
+                  <Download className="mr-2 h-5 w-5" />
+                  Download as PDF
+                </Button>
+            </div>
+          </CardContent>
+        )}
       </Card>
     </div>
   );
 }
+
+
+    
