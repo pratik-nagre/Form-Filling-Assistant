@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useRef } from "react";
@@ -207,8 +208,8 @@ export function FormAssistant() {
     const data = form.getValues();
     
     doc.setFontSize(22);
-    const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
-    doc.setTextColor(`hsl(${primaryColor})`);
+    const primaryColorHsl = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+    doc.setTextColor(`hsl(${primaryColorHsl.split(' ').join(',')})`);
     doc.text("Extracted Form Data", 20, 20);
 
     doc.setFontSize(12);
@@ -349,7 +350,7 @@ export function FormAssistant() {
       <label
         htmlFor={title.toLowerCase().replace(/[\s\(\)]+/g, "-")}
         className={cn(
-          "flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer hover:bg-muted/50 transition-colors",
+          "relative flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer hover:bg-muted/50 transition-colors",
           { "border-primary bg-muted/20": !preview && !file }
         )}
       >
@@ -362,19 +363,12 @@ export function FormAssistant() {
               style={{objectFit:"contain"}}
               className="rounded-lg p-2"
             />
-             <Button variant="destructive" size="icon" className="absolute top-2 right-2 h-8 w-8 rounded-full z-10" onClick={(e) => {e.preventDefault(); clearPreview();}}>
-              <X className="h-4 w-4" />
-              <span className="sr-only">Clear preview</span>
-            </Button>
           </div>
         ) : file ? (
           <div className="flex flex-col items-center justify-center pt-5 pb-6 text-center">
             <FileText className="w-10 h-10 mb-3 text-primary" />
             <p className="mb-2 text-sm font-semibold">{file.name}</p>
             <p className="text-xs text-muted-foreground">{ (file.size / 1024).toFixed(2) } KB</p>
-             <Button variant="destructive" size="icon" className="absolute top-2 right-2 h-8 w-8 rounded-full z-10" onClick={(e) => {e.preventDefault(); clearPreview();}}>
-              <X className="h-4 w-4" />
-            </Button>
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -386,6 +380,12 @@ export function FormAssistant() {
               {accept === "image/*" ? "Image files" : "Image or PDF files"}
             </p>
           </div>
+        )}
+        {(preview || file) && (
+            <Button variant="destructive" size="icon" className="absolute top-2 right-2 h-8 w-8 rounded-full z-10" onClick={(e) => {e.preventDefault(); clearPreview();}}>
+              <X className="h-4 w-4" />
+              <span className="sr-only">Clear preview</span>
+            </Button>
         )}
         <Input ref={inputRef} id={title.toLowerCase().replace(/[\s\(\)]+/g, "-")} type="file" className="hidden" onChange={handleFileChange} accept={accept} />
       </label>
