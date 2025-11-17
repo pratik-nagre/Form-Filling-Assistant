@@ -14,12 +14,14 @@ export function VoiceInputButton({
   onTranscript, 
   lang = 'en-US' 
 }: VoiceInputButtonProps) {
+  const [isMounted, setIsMounted] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   useEffect(() => {
-    // This code now only runs on the client, after the component has mounted.
+    setIsMounted(true); // Component has mounted on the client
+
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (SpeechRecognition) {
       setIsSupported(true);
@@ -75,6 +77,12 @@ export function VoiceInputButton({
       }
     }
   };
+
+  if (!isMounted) {
+    // Don't render anything on the server or during the initial client render.
+    // This ensures the server and client HTML match.
+    return null;
+  }
 
   if (!isSupported) {
     return (
