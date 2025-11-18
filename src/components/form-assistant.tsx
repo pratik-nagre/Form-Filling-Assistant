@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useRef, useEffect } from "react";
@@ -495,7 +496,7 @@ function CustomFormFlow() {
             });
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [extractedSchema]);
+    }, [extractedSchema, form]);
     
     const handleCustomFormFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files?.[0];
