@@ -9,8 +9,8 @@
  * - `MapDocumentToFormOutput`: The TypeScript type for the output.
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import { ai } from '@/ai/genkit';
+import { z } from 'genkit';
 
 const MapDocumentToFormInputSchema = z.object({
   documentDataUri: z
@@ -23,9 +23,9 @@ const MapDocumentToFormInputSchema = z.object({
 
 export type MapDocumentToFormInput = z.infer<typeof MapDocumentToFormInputSchema>;
 
-// The output schema is dynamic, so we use a record type.
+// The public output schema matches what the application expects.
 const MapDocumentToFormOutputSchema = z.object({
-    mappedData: z.record(z.string()).describe("A JSON object where keys are the form fields and values are the extracted data.")
+  mappedData: z.record(z.string()).describe("A JSON object where keys are the form fields and values are the extracted data.")
 });
 
 export type MapDocumentToFormOutput = z.infer<typeof MapDocumentToFormOutputSchema>;
@@ -34,12 +34,20 @@ export async function mapDocumentToForm(input: MapDocumentToFormInput): Promise<
   return mapDocumentToFormFlow(input);
 }
 
+// Internal schema for the LLM prompt to avoid "empty properties" error with z.record
+const PromptOutputSchema = z.object({
+  entries: z.array(z.object({
+    fieldName: z.string(),
+    extractedValue: z.string()
+  })).describe("List of extracted field values")
+});
+
 const mapDocumentToFormPrompt = ai.definePrompt({
   name: 'mapDocumentToFormPrompt',
-  input: {schema: MapDocumentToFormInputSchema},
+  input: { schema: MapDocumentToFormInputSchema },
   output: {
     format: 'json',
-    schema: MapDocumentToFormOutputSchema
+    schema: PromptOutputSchema
   },
   prompt: `You are an AI assistant that specializes in filling out forms. Your task is to extract information from a source document and map it to the fields of a given form.
 
@@ -53,9 +61,11 @@ const mapDocumentToFormPrompt = ai.definePrompt({
   Source Document:
   {{media url=documentDataUri}}
 
-  Return a single JSON object for the 'mappedData' key. The keys of this object must be the exact field names provided in the 'formFields' array. The values should be the corresponding information extracted from the source document.
+  Return a JSON object containing an 'entries' array. Each entry should have:
+  - 'fieldName': The exact name of the field from the provided list.
+  - 'extractedValue': The corresponding information extracted from the source document.
 
-  If you cannot find a value for a specific field, the value should be an empty string "". Do not omit any fields.
+  If you cannot find a value for a specific field, the 'extractedValue' should be an empty string "". Do not omit any fields.
   `,
 });
 
@@ -66,7 +76,16 @@ const mapDocumentToFormFlow = ai.defineFlow(
     outputSchema: MapDocumentToFormOutputSchema,
   },
   async input => {
-    const {output} = await mapDocumentToFormPrompt(input);
-    return output!;
+    const { output } = await mapDocumentToFormPrompt(input);
+
+    // Transform the array back into the record format expected by the app
+    const mappedData: Record<string, string> = {};
+    if (output && output.entries) {
+      output.entries.forEach(entry => {
+        mappedData[entry.fieldName] = entry.extractedValue;
+      });
+    }
+
+    return { mappedData };
   }
 );
