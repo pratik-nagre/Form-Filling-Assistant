@@ -276,12 +276,14 @@ function DefaultFormFlow() {
                                         <Textarea
                                             placeholder={`Enter ${label.toLowerCase()}`}
                                             {...field}
+                                            value={field.value ?? ''}
                                             className="bg-background/80"
                                         />
                                     ) : (
                                         <Input
                                             placeholder={`Enter ${label.toLowerCase()}`}
                                             {...field}
+                                            value={field.value ?? ''}
                                             className="bg-background/80"
                                         />
                                     )}
