@@ -301,7 +301,7 @@ export function DefaultFormFlow() {
 
     return (
         <div className="space-y-8">
-            <Card className={cn("transition-all duration-500", step < 1 && "opacity-50")}>
+            <Card className={cn("transition-all duration-500 border-none shadow-lg hover:shadow-xl border-l-4 border-l-blue-500 bg-gradient-to-br from-white via-cyan-50 to-blue-50 dark:from-slate-900 dark:to-slate-900", step < 1 && "opacity-50")}>
                 <CardHeader>
                     <CardTitle className="flex items-center">
                         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground mr-3 font-bold text-lg">1</div>
@@ -310,40 +310,42 @@ export function DefaultFormFlow() {
                     </CardTitle>
                     <CardDescription>Upload an ID card, form, or any document to extract information from.</CardDescription>
                 </CardHeader>
-                {step === 1 && (
-                    <>
-                        <CardContent>
-                            {renderUploadCard(
-                                "Source Document",
-                                "Upload an image or PDF of your document to extract information.",
-                                docFile,
-                                docPreview,
-                                handleDocFileChange,
-                                clearDocPreview,
-                                "image/*,application/pdf",
-                                FileUp,
-                                docInputRef
-                            )}
-                        </CardContent>
-                        <CardFooter>
-                            <Button
-                                onClick={handleExtractData}
-                                disabled={!docFile || isExtracting}
-                                className="w-full"
-                            >
-                                {isExtracting ? (
-                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                ) : (
-                                    <ArrowRight className="mr-2 h-4 w-4" />
+                {
+                    step === 1 && (
+                        <>
+                            <CardContent>
+                                {renderUploadCard(
+                                    "Source Document",
+                                    "Upload an image or PDF of your document to extract information.",
+                                    docFile,
+                                    docPreview,
+                                    handleDocFileChange,
+                                    clearDocPreview,
+                                    "image/*,application/pdf",
+                                    FileUp,
+                                    docInputRef
                                 )}
-                                {isExtracting ? "Extracting..." : "Extract & Continue"}
-                            </Button>
-                        </CardFooter>
-                    </>
-                )}
-            </Card>
+                            </CardContent>
+                            <CardFooter>
+                                <Button
+                                    onClick={handleExtractData}
+                                    disabled={!docFile || isExtracting}
+                                    className="w-full"
+                                >
+                                    {isExtracting ? (
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    ) : (
+                                        <ArrowRight className="mr-2 h-4 w-4" />
+                                    )}
+                                    {isExtracting ? "Extracting..." : "Extract & Continue"}
+                                </Button>
+                            </CardFooter>
+                        </>
+                    )
+                }
+            </Card >
 
-            <Card className={cn("transition-all duration-500", step < 2 && "opacity-50 pointer-events-none")}>
+            <Card className={cn("transition-all duration-500 border-none shadow-lg hover:shadow-xl border-l-4 border-l-purple-500 bg-gradient-to-br from-white via-fuchsia-50 to-purple-50 dark:from-slate-900 dark:to-slate-900", step < 2 && "opacity-50 pointer-events-none")}>
                 <CardHeader>
                     <CardTitle className="flex items-center">
                         <div className={cn("flex items-center justify-center w-8 h-8 rounded-full mr-3 font-bold text-lg", step === 2 ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground")}>2</div>
@@ -388,7 +390,7 @@ export function DefaultFormFlow() {
                 )}
             </Card>
 
-            <Card className={cn("transition-all duration-500", step < 3 && "opacity-50 pointer-events-none")}>
+            <Card className={cn("transition-all duration-500 border-none shadow-lg hover:shadow-xl border-l-4 border-l-emerald-500 bg-gradient-to-br from-white via-teal-50 to-emerald-50 dark:from-slate-900 dark:to-slate-900", step < 3 && "opacity-50 pointer-events-none")}>
                 <CardHeader>
                     <CardTitle className="flex items-center">
                         <div className={cn("flex items-center justify-center w-8 h-8 rounded-full mr-3 font-bold text-lg", step === 3 ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground")}>3</div>
@@ -407,6 +409,6 @@ export function DefaultFormFlow() {
                     </CardContent>
                 )}
             </Card>
-        </div>
+        </div >
     );
 }

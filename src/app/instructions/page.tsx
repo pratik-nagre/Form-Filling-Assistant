@@ -9,7 +9,7 @@ export default async function InstructionsPage() {
     const userName = cookieStore.get('session_user_name')?.value || 'Guest';
 
     return (
-        <div className="min-h-screen bg-muted/20 font-body">
+        <div className="min-h-screen bg-cyan-50 font-body">
             <AppNavbar userName={userName} />
 
             <main className="container mx-auto px-4 py-8 max-w-4xl space-y-12">

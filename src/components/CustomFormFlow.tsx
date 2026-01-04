@@ -430,7 +430,7 @@ export function CustomFormFlow() {
     return (
         <div className="space-y-8">
             {/* Step 1: Upload Custom Form */}
-            <Card className={cn("transition-all duration-500", step < 1 && "opacity-50")}>
+            <Card className={cn("transition-all duration-500 border-none shadow-lg hover:shadow-xl border-l-4 border-l-orange-500 bg-gradient-to-br from-white via-amber-50 to-orange-50 dark:from-slate-900 dark:to-slate-900", step < 1 && "opacity-50")}>
                 <CardHeader>
                     <CardTitle className="flex items-center">
                         <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground mr-3 font-bold text-lg">1</div>
@@ -461,11 +461,13 @@ export function CustomFormFlow() {
                             </Button>
                         </CardFooter>
                     </>
-                )}
-            </Card>
+                )
+                }
+            </Card >
 
             {/* Step 2: Fill & Download */}
-            <Card className={cn("transition-all duration-500", step < 2 && "opacity-50 pointer-events-none")}>
+            {/* Step 2: Fill & Download */}
+            <Card className={cn("transition-all duration-500 border-none shadow-lg hover:shadow-xl border-l-4 border-l-indigo-500 bg-gradient-to-br from-white via-blue-50 to-indigo-50 dark:from-slate-900 dark:to-slate-900", step < 2 && "opacity-50 pointer-events-none")}>
                 <CardHeader>
                     <CardTitle className="flex items-center">
                         <div className={cn("flex items-center justify-center w-8 h-8 rounded-full mr-3 font-bold text-lg", step === 2 ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground")}>2</div>
@@ -656,6 +658,6 @@ export function CustomFormFlow() {
                 )}
             </Card>
 
-        </div>
+        </div >
     );
 }

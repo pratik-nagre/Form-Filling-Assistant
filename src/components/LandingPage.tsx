@@ -22,11 +22,13 @@ export function LandingPage() {
         }
     };
 
+
+
     return (
         <div className="min-h-screen bg-background text-foreground font-body selection:bg-blue-100 selection:text-blue-900">
-            {/* Header */}
-            <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+            {/* ... keeping existing header ... */}
+            <header className="sticky top-4 z-50 w-full px-4">
+                <div className="container mx-auto max-w-6xl rounded-full border bg-background/80 backdrop-blur-md shadow-sm px-6 h-16 flex items-center justify-between supports-[backdrop-filter]:bg-background/60">
                     <div className="flex items-center gap-2 font-bold text-xl tracking-tight">
                         <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
                             <Zap className="w-5 h-5" />
@@ -50,8 +52,11 @@ export function LandingPage() {
             </header>
 
             <main>
+                {/* ... existing hero and other sections ... */}
+
                 {/* Hero Section */}
                 <section className="relative overflow-hidden py-20 lg:py-32 bg-gradient-to-b from-blue-50/50 to-transparent dark:from-blue-950/20">
+                    {/* ... (Hero content truncated for brevity, assume matches existing) ... */}
                     <div className="container mx-auto px-4 text-center relative z-10">
                         <div className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-sm font-medium text-blue-800 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                             <span className="flex h-2 w-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
@@ -200,7 +205,12 @@ export function LandingPage() {
                                     <a href="https://www.linkedin.com/in/pratiknagre/" target="_blank" rel="noreferrer" className="p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors">
                                         <Linkedin className="w-5 h-5 text-blue-600" />
                                     </a>
-                                    <a href="mailto:pratiknagre34@gmail.com?subject=Inquiry%20regarding%20FormAssistant" target="_blank" className="p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors">
+                                    <a
+                                        href="https://mail.google.com/mail/?view=cm&fs=1&to=pratiknagre34@gmail.com&su=Inquiry%20regarding%20FormAssistant"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors"
+                                    >
                                         <Mail className="w-5 h-5" />
                                     </a>
                                 </div>
@@ -223,7 +233,12 @@ export function LandingPage() {
                                     <a href="https://www.linkedin.com/in/veer-bobade-7036242b5/" target="_blank" rel="noreferrer" className="p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors">
                                         <Linkedin className="w-5 h-5 text-blue-600" />
                                     </a>
-                                    <a href="mailto:veerbobade22@gmail.com?subject=Inquiry%20regarding%20FormAssistant" target="_blank" className="p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors">
+                                    <a
+                                        href="https://mail.google.com/mail/?view=cm&fs=1&to=veerbobade22@gmail.com&su=Inquiry%20regarding%20FormAssistant"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors"
+                                    >
                                         <Mail className="w-5 h-5" />
                                     </a>
                                 </div>

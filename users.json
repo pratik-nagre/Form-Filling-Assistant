@@ -10,5 +10,11 @@
     "name": "Pratik Nagre",
     "email": "nagrepratik2002@gmail.com",
     "password": "e86f78a8a3caf0b60d8e74e5942aa6d86dc150cd3c03338aef25b7d2d7e3acc7"
+  },
+  {
+    "id": "f1562688-1cca-44bf-9d31-29c1727cc99f",
+    "name": "DemoUser",
+    "email": "demo_video@example.com",
+    "password": "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f"
   }
 ]

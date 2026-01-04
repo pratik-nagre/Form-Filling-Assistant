@@ -25,8 +25,8 @@ export default function RegisterPage() {
     // I'll extract a SubmitButton or just use standard form action.
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
-            <Card className="w-full max-w-md">
+        <div className="flex items-center justify-center min-h-screen bg-cyan-50 dark:bg-gray-900 p-4">
+            <Card className="w-full max-w-md bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 border-white/50 shadow-xl">
                 <CardHeader>
                     <CardTitle className="text-2xl font-bold text-center">Create Account</CardTitle>
                     <CardDescription className="text-center">
@@ -37,12 +37,12 @@ export default function RegisterPage() {
                     <CardContent className="space-y-4">
                         <div className="space-y-2">
                             <Label htmlFor="name">Name</Label>
-                            <Input id="name" name="name" placeholder="John Doe" required />
+                            <Input id="name" name="name" placeholder="John Doe" required className="bg-white/50" />
                             {state?.error?.name && <p className="text-sm text-red-500">{state.error.name}</p>}
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="email">Email</Label>
-                            <Input id="email" name="email" type="email" placeholder="john@example.com" required />
+                            <Input id="email" name="email" type="email" placeholder="john@example.com" required className="bg-white/50" />
                             {state?.error?.email && <p className="text-sm text-red-500">{state.error.email}</p>}
                         </div>
                         <div className="space-y-2">
@@ -54,6 +54,7 @@ export default function RegisterPage() {
                                     type={showPassword ? 'text' : 'password'}
                                     placeholder="******"
                                     required
+                                    className="bg-white/50"
                                 />
                                 <button
                                     type="button"
@@ -75,7 +76,7 @@ export default function RegisterPage() {
                         <SubmitButton />
                         <div className="text-center text-sm">
                             Already have an account?{' '}
-                            <Link href="/login" className="text-blue-600 hover:underline">
+                            <Link href="/login" className="text-purple-600 hover:underline font-medium">
                                 Sign in
                             </Link>
                         </div>
@@ -92,7 +93,7 @@ function SubmitButton() {
     const { pending } = useFormStatus();
 
     return (
-        <Button type="submit" className="w-full" disabled={pending}>
+        <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white" disabled={pending}>
             {pending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating account...</> : 'Create Account'}
         </Button>
     );

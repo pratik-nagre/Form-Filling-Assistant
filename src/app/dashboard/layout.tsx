@@ -17,7 +17,7 @@ export default async function DashboardLayout({
     }
 
     return (
-        <div className="min-h-screen bg-muted/20">
+        <div className="min-h-screen bg-cyan-50 dark:bg-gray-900">
             <AppNavbar userName={userName} />
             <main className="container mx-auto max-w-5xl p-4 sm:p-6 lg:p-8 space-y-8">
                 {children}

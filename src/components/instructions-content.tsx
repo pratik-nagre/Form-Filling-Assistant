@@ -86,10 +86,10 @@ export function WebAppInstructions() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-6">
-                <Card className="hover:shadow-md transition-shadow">
+                <Card className="hover:shadow-xl transition-all duration-300 border-none shadow-md border-t-4 border-t-blue-500 bg-gradient-to-b from-white to-blue-50 dark:from-slate-900 dark:to-slate-800/50">
                     <CardHeader>
-                        <CardTitle className="flex items-center gap-2 text-lg">
-                            <Upload className="w-5 h-5 text-blue-500" /> Upload
+                        <CardTitle className="flex items-center gap-2 text-lg text-blue-700 dark:text-blue-400">
+                            <Upload className="w-6 h-6" /> Upload
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -99,10 +99,10 @@ export function WebAppInstructions() {
                     </CardContent>
                 </Card>
 
-                <Card className="hover:shadow-md transition-shadow">
+                <Card className="hover:shadow-xl transition-all duration-300 border-none shadow-md border-t-4 border-t-purple-500 bg-gradient-to-b from-white to-purple-50 dark:from-slate-900 dark:to-slate-800/50">
                     <CardHeader>
-                        <CardTitle className="flex items-center gap-2 text-lg">
-                            <Eye className="w-5 h-5 text-purple-500" /> Review
+                        <CardTitle className="flex items-center gap-2 text-lg text-purple-700 dark:text-purple-400">
+                            <Eye className="w-6 h-6" /> Review
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -112,10 +112,10 @@ export function WebAppInstructions() {
                     </CardContent>
                 </Card>
 
-                <Card className="hover:shadow-md transition-shadow">
+                <Card className="hover:shadow-xl transition-all duration-300 border-none shadow-md border-t-4 border-t-emerald-500 bg-gradient-to-b from-white to-emerald-50 dark:from-slate-900 dark:to-slate-800/50">
                     <CardHeader>
-                        <CardTitle className="flex items-center gap-2 text-lg">
-                            <Download className="w-5 h-5 text-green-500" /> Export
+                        <CardTitle className="flex items-center gap-2 text-lg text-emerald-700 dark:text-emerald-400">
+                            <Download className="w-6 h-6" /> Export
                         </CardTitle>
                     </CardHeader>
                     <CardContent>

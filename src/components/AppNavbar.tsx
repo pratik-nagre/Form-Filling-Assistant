@@ -33,8 +33,8 @@ export function AppNavbar({ userName = "User" }: { userName?: string }) {
     ];
 
     return (
-        <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-            <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+        <nav className="sticky top-4 z-50 w-full px-4 mb-8">
+            <div className="container mx-auto max-w-7xl rounded-full border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm px-6 h-16 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tight hover:opacity-80 transition-opacity">
                     <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground shadow-sm">
