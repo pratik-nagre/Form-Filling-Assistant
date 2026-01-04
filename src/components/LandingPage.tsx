@@ -35,7 +35,6 @@ export function LandingPage() {
                     </div>
                     <div className="hidden md:flex gap-6 text-sm font-medium text-muted-foreground">
                         <a href="#features" className="hover:text-foreground transition-colors">Features</a>
-                        <a href="#how-it-works" className="hover:text-foreground transition-colors">How it Works</a>
                         <a href="#instructions-section" className="hover:text-foreground transition-colors">Setup Guide</a>
                         <a href="#about" className="hover:text-foreground transition-colors">About</a>
                     </div>
@@ -79,7 +78,7 @@ export function LandingPage() {
                                     <p className="text-muted-foreground mb-6">
                                         Upload documents, extract data, and fill standard forms directly in your dashboard.
                                     </p>
-                                    <Link href="/register" className="mt-auto w-full">
+                                    <Link href="/login" className="mt-auto w-full">
                                         <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white" size="lg">
                                             Start Dashboard <ArrowRight className="w-4 h-4 ml-2" />
                                         </Button>
