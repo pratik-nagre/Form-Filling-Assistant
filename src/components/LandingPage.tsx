@@ -41,7 +41,7 @@ export function LandingPage() {
                     </div>
                     <div className="hidden md:flex gap-6 text-sm font-medium text-muted-foreground items-center">
                         <a href="#features" className="hover:text-foreground transition-colors">Features</a>
-                        <a href="#instructions-section" className="hover:text-foreground transition-colors">Setup Guide</a>
+                        <a href="#instructions-section" className="hover:text-foreground transition-colors">{t.setup_guide_nav}</a>
                         <a href="#about" className="hover:text-foreground transition-colors">About</a>
                     </div>
                     <div className="flex items-center gap-4">
@@ -81,9 +81,9 @@ export function LandingPage() {
                                     <div className="h-14 w-14 rounded-full bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center mb-4 group-hover:bg-purple-200 dark:group-hover:bg-purple-900/40 transition-colors">
                                         <PlayCircle className="w-7 h-7 text-purple-600 dark:text-purple-400" />
                                     </div>
-                                    <h3 className="text-xl font-bold mb-2">Launch Web App</h3>
+                                    <h3 className="text-xl font-bold mb-2">{t.launch_web_app}</h3>
                                     <p className="text-muted-foreground mb-6">
-                                        Upload documents, extract data, and fill standard forms directly in your dashboard.
+                                        {t.launch_web_app_desc}
                                     </p>
                                     <Link href="/login" className="mt-auto w-full">
                                         <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white" size="lg">
@@ -100,12 +100,12 @@ export function LandingPage() {
                                     <div className="h-14 w-14 rounded-full bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center mb-4 group-hover:bg-blue-200 dark:group-hover:bg-blue-900/40 transition-colors">
                                         <Chrome className="w-7 h-7 text-blue-600 dark:text-blue-400" />
                                     </div>
-                                    <h3 className="text-xl font-bold mb-2">Get Chrome Extension</h3>
+                                    <h3 className="text-xl font-bold mb-2">{t.get_chrome_extension}</h3>
                                     <p className="text-muted-foreground mb-6">
-                                        Auto-fill forms on any website while you browse. Download and install in seconds.
+                                        {t.get_chrome_extension_desc}
                                     </p>
                                     <div className="mt-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium flex items-center justify-center w-full transition-all">
-                                        Download & Instructions <Download className="w-4 h-4 ml-2" />
+                                        {t.download_instructions} <Download className="w-4 h-4 ml-2" />
                                     </div>
                                 </div>
                             </div>
@@ -121,9 +121,9 @@ export function LandingPage() {
                 <section id="features" className="py-20 bg-muted/30">
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-16">
-                            <h2 className="text-3xl font-bold tracking-tight mb-4">Everything You Need to Speed Up</h2>
+                            <h2 className="text-3xl font-bold tracking-tight mb-4">{t.everything_need_title}</h2>
                             <p className="text-muted-foreground max-w-2xl mx-auto">
-                                Powerful features designed to handle any form, anywhere.
+                                {t.everything_need_desc}
                             </p>
                         </div>
                         <div className="grid md:grid-cols-3 gap-8">
@@ -148,9 +148,9 @@ export function LandingPage() {
                 <section id="instructions-section" className="py-20 bg-background border-t">
                     <div className="container mx-auto px-4 max-w-5xl">
                         <div className="text-center mb-16">
-                            <h2 className="text-3xl font-bold tracking-tight mb-4">Complete Setup Guide</h2>
+                            <h2 className="text-3xl font-bold tracking-tight mb-4">{t.complete_setup_guide}</h2>
                             <p className="text-muted-foreground max-w-2xl mx-auto">
-                                Everything you need to know to get started with FormAssistant.
+                                {t.complete_setup_desc}
                             </p>
                         </div>
 
@@ -158,8 +158,8 @@ export function LandingPage() {
                             {/* Extension Guide */}
                             <div className="space-y-8">
                                 <div className="border-l-4 border-blue-600 pl-6">
-                                    <h3 className="text-2xl font-bold">1. Browser Extension</h3>
-                                    <p className="text-muted-foreground">For filling out external websites.</p>
+                                    <h3 className="text-2xl font-bold">{t.extension_guide_title}</h3>
+                                    <p className="text-muted-foreground">{t.extension_guide_desc}</p>
                                 </div>
                                 <ExtensionInstructions />
                             </div>
@@ -169,8 +169,8 @@ export function LandingPage() {
                             {/* Web App Guide */}
                             <div className="space-y-8">
                                 <div className="border-l-4 border-purple-600 pl-6">
-                                    <h3 className="text-2xl font-bold">2. Web Application</h3>
-                                    <p className="text-muted-foreground">For document processing and standard forms.</p>
+                                    <h3 className="text-2xl font-bold">{t.webapp_guide_title}</h3>
+                                    <p className="text-muted-foreground">{t.webapp_guide_desc}</p>
                                 </div>
                                 <WebAppInstructions />
                             </div>
@@ -183,9 +183,9 @@ export function LandingPage() {
                 <section id="about" className="py-20 bg-muted/50 border-t">
                     <div className="container mx-auto px-4 max-w-4xl text-center">
                         <div className="mb-12">
-                            <h2 className="text-3xl font-bold tracking-tight mb-4">Meet the Team</h2>
+                            <h2 className="text-3xl font-bold tracking-tight mb-4">{t.meet_team}</h2>
                             <p className="text-muted-foreground">
-                                Built with updates by passionate developers.
+                                {t.meet_team_desc}
                             </p>
                         </div>
 
@@ -196,9 +196,9 @@ export function LandingPage() {
                                     PN
                                 </div>
                                 <h3 className="text-xl font-bold mb-1">Pratik Nagre</h3>
-                                <p className="text-sm text-blue-600 dark:text-blue-400 font-medium mb-4">Lead Developer & Creator</p>
+                                <p className="text-sm text-blue-600 dark:text-blue-400 font-medium mb-4">{t.lead_developer}</p>
                                 <p className="text-muted-foreground text-sm mb-6">
-                                    Passionate about AI and automation. Created FormAssistant to simplify redundant data entry tasks for everyone.
+                                    {t.lead_developer_desc}
                                 </p>
                                 <div className="flex items-center justify-center gap-4">
                                     <a href="https://github.com/pratik-nagre" target="_blank" rel="noreferrer" className="p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors">
@@ -224,9 +224,9 @@ export function LandingPage() {
                                     TM
                                 </div>
                                 <h3 className="text-xl font-bold mb-1">Veer Bobde</h3>
-                                <p className="text-sm text-purple-600 dark:text-purple-400 font-medium mb-4">Co-Developer</p>
+                                <p className="text-sm text-purple-600 dark:text-purple-400 font-medium mb-4">{t.co_developer}</p>
                                 <p className="text-muted-foreground text-sm mb-6">
-                                    Contributed to the core architecture and UI design. Dedicated to building seamless user experiences.
+                                    {t.co_developer_desc}
                                 </p>
                                 <div className="flex items-center justify-center gap-4">
                                     <a href="https://github.com/Veerbobade20" target="_blank" rel="noreferrer" className="p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors">
@@ -250,7 +250,7 @@ export function LandingPage() {
                         <div className="border-t pt-8">
                             <p className="text-sm text-muted-foreground">
                                 &copy; 2024 FormAssistant. {t.footer_rights} <br />
-                                Built for speed, security, and simplicity.
+                                {t.footer_desc}
                             </p>
                         </div>
                     </div>

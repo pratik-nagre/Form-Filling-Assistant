@@ -373,7 +373,28 @@ export const landingPageTranslations: Record<string, Record<string, string>> = {
         step_3_title: "Review & Download",
         step_3_desc: "Verify the details and download your filled form.",
         footer_rights: "All rights reserved.",
-        open_dashboard: "Open Dashboard"
+        open_dashboard: "Open Dashboard",
+        setup_guide_nav: "Setup Guide",
+        launch_web_app: "Launch Web App",
+        launch_web_app_desc: "Upload documents, extract data, and fill standard forms directly in your dashboard.",
+        get_chrome_extension: "Get Chrome Extension",
+        get_chrome_extension_desc: "Auto-fill forms on any website while you browse. Download and install in seconds.",
+        download_instructions: "Download & Instructions",
+        everything_need_title: "Everything You Need to Speed Up",
+        everything_need_desc: "Powerful features designed to handle any form, anywhere.",
+        complete_setup_guide: "Complete Setup Guide",
+        complete_setup_desc: "Everything you need to know to get started with FormAssistant.",
+        extension_guide_title: "1. Browser Extension",
+        extension_guide_desc: "For filling out external websites.",
+        webapp_guide_title: "2. Web Application",
+        webapp_guide_desc: "For document processing and standard forms.",
+        meet_team: "Meet the Team",
+        meet_team_desc: "Built with updates by passionate developers.",
+        lead_developer: "Lead Developer & Creator",
+        lead_developer_desc: "Passionate about AI and automation. Created FormAssistant to simplify redundant data entry tasks for everyone.",
+        co_developer: "Co-Developer",
+        co_developer_desc: "Contributed to the core architecture and UI design. Dedicated to building seamless user experiences.",
+        footer_desc: "Built for speed, security, and simplicity."
     },
     "hi-IN": {
         hero_title: "एआई-संचालित फॉर्म भरने वाला सहायक",
@@ -446,6 +467,193 @@ export const landingPageTranslations: Record<string, Record<string, string>> = {
         step_2_title: "AI విశ్లేషణ",
         step_3_title: "సమీక్ష & డౌన్‌లోడ్",
         footer_rights: "అన్ని హక్కులూ ప్రత్యేకించబడ్డాయి.",
-        open_dashboard: "డాష్‌బోర్డ్ తెరవండి"
+        open_dashboard: "డాష్‌బోర్డ్ తెరవండి",
+        setup_guide_nav: "సెటప్ గైడ్",
+        launch_web_app: "వెబ్ యాప్‌ను ప్రారంభించండి",
+        launch_web_app_desc: "పత్రాలను అప్‌లోడ్ చేయండి మరియు డేటాను సేకరించండి.",
+        get_chrome_extension: "Chrome పొడిగింపును పొందు",
+        get_chrome_extension_desc: "మీరు బ్రౌజ్ చేస్తున్నప్పుడు ఫారమ్‌లను ఆటోమేటిక్‌గా నింపండి.",
+        download_instructions: "డౌన్‌లోడ్ & సూచనలు",
+        everything_need_title: "మీకు కావాల్సినవన్నీ",
+        everything_need_desc: "శక్తివంతమైన ఫీచర్లు.",
+        complete_setup_guide: "పూర్తి సెటప్ గైడ్",
+        complete_setup_desc: "మీరు ప్రారంభించడానికి కావలసినవన్నీ.",
+        extension_guide_title: "1. బ్రౌజర్ పొడిగింపు",
+        extension_guide_desc: "బయటి వెబ్‌సైట్‌ల కోసం.",
+        webapp_guide_title: "2. వెబ్ అప్లికేషన్",
+        webapp_guide_desc: "పత్ర ప్రాసెసింగ్ కోసం.",
+        meet_team: "టీమ్‌ను కలవండి",
+        meet_team_desc: "అంకితభావం కలిగిన డెవలపర్లు.",
+        lead_developer: "లీడ్ డెవలపర్ & సృష్టికర్త",
+        lead_developer_desc: "AI మరియు ఆటోమేషన్‌పై ఆసక్తి.",
+        co_developer: "సహ-డెవలపర్",
+        co_developer_desc: "UI డిజైన్‌కు సహకరించారు.",
+        footer_desc: "వేగం మరియు భద్రత కోసం నిర్మించబడింది."
     }
 };
+
+export const instructionsTranslations: Record<string, Record<string, string>> = {
+    "en-US": {
+        chrome_extension_setup: "Chrome Extension Setup",
+        chrome_extension_setup_desc: "Automate form filling directly on websites.",
+        download_prepare: "1. Download & Prepare",
+        download_prepare_desc: "Get the extension files to your local machine.",
+        download_package: "Download Extension Package",
+        latest_version: "Latest version: 1.0.0 (ZIP)",
+        download_zip: "Download .Zip",
+        note_unzip: "Note: After downloading, unzip the file into a folder named chrome-extension (or any name you prefer).",
+        install_chrome: "2. Install in Chrome",
+        install_chrome_desc: "Load the unpacked extension into your browser.",
+        step_open_chrome: "Open Google Chrome and navigate to chrome://extensions",
+        step_enable_dev: "Enable Developer mode using the toggle switch in the top right corner.",
+        step_load_unpacked: "Click the Load unpacked button that appears in the top left.",
+        step_select_folder: "Select the unzipped folder (the one containing manifest.json).",
+        trust_warning: "Only install unpacked extensions from sources you trust. This extension runs locally and communicates only with this web app's secure API.",
+        web_dashboard_usage: "Web Dashboard Usage",
+        web_dashboard_usage_desc: "Extract data from documents without the extension.",
+        card_upload: "Upload",
+        card_upload_desc: "Drag & Drop your PDF, PNG, or JPG documents into the upload zone. The AI will instantly start processing.",
+        card_review: "Review",
+        card_review_desc: "See extracted fields side-by-side with your document. Edit any values that need correction before exporting.",
+        card_export: "Export",
+        card_export_desc: "Download the structured data as JSON or Copy to Clipboard to use in your other applications."
+    },
+    "hi-IN": {
+        chrome_extension_setup: "क्रोम एक्सटेंशन सेटअप",
+        chrome_extension_setup_desc: "वेबसाइटों पर सीधे फॉर्म भरना स्वचालित करें।",
+        download_prepare: "1. डाउनलोड करें और तैयारी करें",
+        download_prepare_desc: "एक्सटेंशन फ़ाइलें अपनी स्थानीय मशीन पर प्राप्त करें।",
+        download_package: "एक्सटेंशन पैकेज डाउनलोड करें",
+        latest_version: "नवीनतम संस्करण: 1.0.0 (ZIP)",
+        download_zip: "डाउनलोड .Zip",
+        note_unzip: "नोट: डाउनलोड करने के बाद, फ़ाइल को chrome-extension (या अपनी पसंद के किसी भी नाम) नामक फ़ोल्डर में अनज़िप करें।",
+        install_chrome: "2. क्रोम में स्थापित करें",
+        install_chrome_desc: "अपने ब्राउज़र में अनपैक्ड एक्सटेंशन लोड करें।",
+        step_open_chrome: "Google Chrome खोलें और chrome://extensions पर जाएं",
+        step_enable_dev: "ऊपरी दाएं कोने में टॉगल स्विच का उपयोग करके डेवलपर मोड सक्षम करें।",
+        step_load_unpacked: "ऊपर बाईं ओर दिखाई देने वाले Load unpacked बटन पर क्लिक करें।",
+        step_select_folder: "अनज़िप किए गए फ़ोल्डर का चयन करें (जिसमें manifest.json है)।",
+        trust_warning: "केवल उन स्रोतों से अनपैक्ड एक्सटेंशन इंस्टॉल करें जिन पर आप भरोसा करते हैं।",
+        web_dashboard_usage: "वेब डैशबोर्ड उपयोग",
+        web_dashboard_usage_desc: "एक्सटेंशन के बिना दस्तावेज़ों से डेटा निकालें।",
+        card_upload: "अपलोड",
+        card_upload_desc: "अपने पीडीएफ, पीएनजी, या जेपीजी दस्तावेजों को अपलोड क्षेत्र में खींचें और छोड़ें।",
+        card_review: "समीक्षा",
+        card_review_desc: "अपने दस्तावेज़ के साथ-साथ निकाले गए फ़ील्ड देखें। निर्यात करने से पहले किसी भी मान को संपादित करें।",
+        card_export: "निर्यात",
+        card_export_desc: "संरचित डेटा को JSON के रूप में डाउनलोड करें या क्लिपबोर्ड पर कॉपी करें।"
+    },
+    "mr-IN": {
+        chrome_extension_setup: "क्रोम विस्तार सेटअप",
+        chrome_extension_setup_desc: "वेबसाइटवर थेट फॉर्म भरणे स्वयंचलित करा.",
+        download_prepare: "1. डाउनलोड करा आणि तयारी करा",
+        download_prepare_desc: "आपल्या स्थानिक मशीनवर विस्तार फाइल मिळवा.",
+        download_package: "विस्तार पॅकेज डाउनलोड करा",
+        latest_version: "नवीनतम आवृत्ती: 1.0.0 (ZIP)",
+        download_zip: "डाउनलोड .Zip",
+        note_unzip: "टीप: डाउनलोड केल्यानंतर, फाइल chrome-extension (किंवा आपल्या पसंतीच्या कोणत्याही नावाने) फोल्डरमध्ये अनझिप करा.",
+        install_chrome: "2. क्रोममध्ये स्थापित करा",
+        install_chrome_desc: "आपल्या ब्राउझरमध्ये अनपॅक केलेला विस्तार लोड करा.",
+        step_open_chrome: "Google Chrome उघडा आणि chrome://extensions वर नेव्हिगेट करा",
+        step_enable_dev: "वरच्या उजव्या कोपर्यात टॉगल स्विच वापरून डेव्हलपर मोड सक्षम करा.",
+        step_load_unpacked: "वरच्या डाव्या बाजूला दिसणाऱ्या Load unpacked बटणावर क्लिक करा.",
+        step_select_folder: "अनझिप फोल्डर निवडा (ज्यामध्ये manifest.json आहे).",
+        trust_warning: "फक्त विश्वासार्ह स्रोतांकडूनच अनपॅक केलेले विस्तार स्थापित करा.",
+        web_dashboard_usage: "वेब डॅशबोर्ड वापर",
+        web_dashboard_usage_desc: "विस्ताराशिवाय दस्तऐवजांमधून डेटा काढा.",
+        card_upload: "अपलोड",
+        card_upload_desc: "आपले पीडीएफ, पीएनजी किंवा जेपीजी दस्तऐवज अपलोड झोनमध्ये ड्रॅग आणि ड्रॉप करा.",
+        card_review: "पुनरावलोकन",
+        card_review_desc: "आपल्या दस्तऐवजासह काढलेले फील्ड बाजूला पहा. निर्यात करण्यापूर्वी कोणत्याही मूल्यांमध्ये सुधारणा करा.",
+        card_export: "निर्यात",
+        card_export_desc: "संरचित डेटा JSON म्हणून डाउनलोड करा किंवा क्लिपबोर्डवर कॉपी करा."
+    },
+    "ta-IN": {
+        chrome_extension_setup: "Chrome நீட்டிப்பு அமைப்பு",
+        chrome_extension_setup_desc: "இணையதளங்களில் படிவங்களை நிரப்புவதை தானியக்கமாக்குங்கள்.",
+        download_prepare: "1. பதிவிறக்கம் & தயார்",
+        download_prepare_desc: "நீட்டிப்பு கோப்புகளைப் பெறவும்.",
+        download_package: "நீட்டிப்பு தொகுப்பை பதிவிறக்கவும்",
+        latest_version: "பதிப்பு: 1.0.0 (ZIP)",
+        download_zip: "பதிவிறக்கவும் .Zip",
+        note_unzip: "குறிப்பு: பதிவிறக்கிய பிறகு, கோப்பை அன்சிப் செய்யவும்.",
+        install_chrome: "2. Chrome இல் நிறுவவும்",
+        install_chrome_desc: "நீட்டிப்பை உங்கள் உலாவியில் ஏற்றவும்.",
+        step_open_chrome: "Chrome ஐத் திறந்து chrome://extensions க்குச் செல்லவும்",
+        step_enable_dev: "Developer mode ஐ இயக்கவும்.",
+        step_load_unpacked: "Load unpacked பொத்தானைக் கிளிக் செய்யவும்.",
+        step_select_folder: "அன்சிப் செய்யப்பட்ட கோப்புறையைத் தேர்ந்தெடுக்கவும்.",
+        trust_warning: "நம்பகமான மூலங்களிலிருந்து மட்டுமே நிறுவவும்.",
+        web_dashboard_usage: "வலை டாஷ்போர்டு பயன்பாடு",
+        web_dashboard_usage_desc: "நீட்டிப்பு இல்லாமல் தரவைப் பிரித்தெடுக்கவும்.",
+        card_upload: "பதிவேற்றவும்",
+        card_upload_desc: "உங்கள் ஆவணங்களை இழுத்து விடவும்.",
+        card_review: "மதிப்பாய்வு",
+        card_review_desc: "பிரித்தெடுக்கப்பட்ட புலங்களைச் சரிபார்க்கவும்.",
+        card_export: "ஏற்றுமதி",
+        card_export_desc: "தரவைப் பதிவிறக்கவும் அல்லது நகலெடுக்கவும்."
+    },
+    "te-IN": {
+        chrome_extension_setup: "Chrome పొడిగింపు సెటప్",
+        chrome_extension_setup_desc: "వెబ్‌సైట్‌లలో ఫారమ్‌లను నింపడాన్ని ఆటోమేట్ చేయండి.",
+        download_prepare: "1. డౌన్‌లోడ్ & సిద్ధం",
+        download_prepare_desc: "పొడిగింపు ఫైళ్లను పొందండి.",
+        download_package: "ప్యాకేజీని డౌన్‌లోడ్ చేయండి",
+        latest_version: "వెర్షన్: 1.0.0 (ZIP)",
+        download_zip: "డౌన్‌లోడ్ .Zip",
+        note_unzip: "గమనిక: డౌన్‌లోడ్ చేసిన తర్వాత, ఫైల్‌ను అన్‌జిప్ చేయండి.",
+        install_chrome: "2. Chrome లో ఇన్‌స్టాల్ చేయండి",
+        install_chrome_desc: "మీ బ్రౌజర్‌లో పొడిగింపును లోడ్ చేయండి.",
+        step_open_chrome: "Chrome తెరిచి chrome://extensions కు వెళ్లండి",
+        step_enable_dev: "Developer mode ను ప్రారంభించండి.",
+        step_load_unpacked: "Load unpacked బటన్‌పై క్లిక్ చేయండి.",
+        step_select_folder: "అన్‌జిప్ చేసిన ఫోల్డర్‌ను ఎంచుకోండి.",
+        trust_warning: "నమ్మదగిన మూలాల నుండి మాత్రమే ఇన్‌స్టాల్ చేయండి.",
+        web_dashboard_usage: "వెబ్ డాష్‌బోర్డ్ వినియోగం",
+        web_dashboard_usage_desc: "పొడిగింపు లేకుండా డేటాను సేకరించండి.",
+        card_upload: "అప్‌లోడ్",
+        card_upload_desc: "మీ పత్రాలను లాగండి మరియు వదలండి.",
+        card_review: "సమీక్ష",
+        card_review_desc: "సేకరించిన ఫీల్డ్‌లను సరిచూడండి.",
+        card_export: "ఎగుమతి",
+        card_export_desc: "డేటాను డౌన్‌లోడ్ చేయండి లేదా కాపీ చేయండి.",
+        dashboard_guide_title: "డాష్‌బోర్డ్ గైడ్",
+        dashboard_guide_desc: "వెబ్ డాష్‌బోర్డ్‌ను సమర్థవంతంగా ఎలా ఉపయోగించాలో నేర్చుకోండి."
+    }
+};
+
+export const dashboardGuideTranslations = {
+    "en-US": {
+        title: "Dashboard Guide",
+        desc: "Learn how to use the web dashboard effectively."
+    },
+    "hi-IN": {
+        title: "डैशबोर्ड गाइड",
+        desc: "वेब डैशबोर्ड का प्रभावी ढंग से उपयोग करना सीखें।"
+    },
+    "mr-IN": {
+        title: "डॅशबोर्ड मार्गदर्शक",
+        desc: "वेब डॅशबोर्ड प्रभावीपणे कसे वापरावे ते शिका."
+    },
+    "ta-IN": {
+        title: "டாஷ்போர்டு வழிகாட்டி",
+        desc: "வலை டாஷ்போர்டை எவ்வாறு திறம்பட பயன்படுத்துவது என்பதை அறிக."
+    },
+    "te-IN": {
+        title: "డాష్‌బోర్డ్ గైడ్",
+        desc: "వెబ్ డాష్‌బోర్డ్‌ను సమర్థవంతంగా ఎలా ఉపయోగించాలో నేర్చుకోండి."
+    }
+};
+
+// Ensure all keys have fallbacks from English
+Object.keys(landingPageTranslations).forEach(lang => {
+    if (lang !== "en-US") {
+        landingPageTranslations[lang] = { ...landingPageTranslations["en-US"], ...landingPageTranslations[lang] };
+    }
+});
+
+Object.keys(instructionsTranslations).forEach(lang => {
+    if (lang !== "en-US") {
+        instructionsTranslations[lang] = { ...instructionsTranslations["en-US"], ...instructionsTranslations[lang] };
+    }
+});
